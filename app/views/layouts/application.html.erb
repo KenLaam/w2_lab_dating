@@ -36,13 +36,12 @@
   </div>
 </nav>
 
-<% if flash.any? %>
-    <% flash.each do |flash| %>
-        <div class="alert alert-info"><%= flash[1] %></div>
-    <% end %>
-<% end %>
-
 <div class="container">
+  <% if flash.any? %>
+      <% flash.each do |flash| %>
+          <div class="alert alert-info"><%= flash[1] %></div>
+      <% end %>
+  <% end %>
   <%= yield %>
 </div>
 
