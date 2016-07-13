@@ -1,9 +1,12 @@
 Rails.application.routes.draw do
-  # get 'sessions/new'
   resources :sessions, only: [:new, :create]
+  resources :users
+
   get 'login' => 'sessions#new'
   delete 'logout' => 'sessions#destroy'
+
+  get 'auth/:provider/callback' => 'sessions#callback'
+
   root 'welcome#index'
-  resources :users
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end

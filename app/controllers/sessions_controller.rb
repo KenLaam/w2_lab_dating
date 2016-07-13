@@ -1,5 +1,5 @@
 class SessionsController < ApplicationController
-  skip_before_action :require_login, only: [:new, :create]
+  skip_before_action :require_login, only: [:new, :create, :callback]
 
   def new
   end
@@ -19,5 +19,18 @@ class SessionsController < ApplicationController
     session[:user_id] = nil
     flash[:success]   = 'Logged out.'
     redirect_to root_path
+  end
+
+  def callback
+    raise 'debug'
+    if user = User.from_omniauth(env["omniauth.auth"])
+      session[:user_id] = user
+      flash[:success]   = 'Logged in with your FB account'
+      redirect_to root_path
+    else
+      raise 'debug'
+      flash.now[:error] = 'Cannot log in with you FB credential'
+      render "new"
+    end
   end
 end
