@@ -22,13 +22,11 @@ class SessionsController < ApplicationController
   end
 
   def callback
-    raise 'debug'
-    if user = User.from_omniauth(env["omniauth.auth"])
-      session[:user_id] = user
+    if (user = User.from_omniauth(env["omniauth.auth"]))
+      session[:user_id] = user.id
       flash[:success]   = 'Logged in with your FB account'
       redirect_to root_path
     else
-      raise 'debug'
       flash.now[:error] = 'Cannot log in with you FB credential'
       render "new"
     end
